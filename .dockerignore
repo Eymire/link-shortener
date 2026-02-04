@@ -1,0 +1,15 @@
+.git
+.gitignore
+
+Dockerfile
+compose.yaml
+.dockerignore
+
+.venv/
+**/__pycache__/
+
+.env
+
+migrations/versions/*
+
+README.md
