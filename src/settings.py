@@ -13,6 +13,8 @@ class AppSettings(BaseSettings):
 
     environment: Literal['development', 'production'] = 'development'
     root_path: str | None = None
+    link_length: int = 8
+    link_lifetime_days: int = 30
 
 
 class DatabaseSettings(BaseSettings):
