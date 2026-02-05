@@ -1,4 +1,5 @@
 import secrets
+from contextlib import suppress
 from datetime import UTC, datetime, timedelta
 from string import ascii_letters, digits
 
@@ -6,6 +7,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import delete, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.cache import cache_storage
 from src.models import Link as LinkModel
 from src.settings import app_settings
 
@@ -60,3 +62,6 @@ async def remove_short_link(
     stmt = delete(LinkModel).where(LinkModel.short_code == short_code)
     await session.execute(stmt)
     await session.commit()
+
+    with suppress(Exception):
+        await cache_storage.delete(short_code)

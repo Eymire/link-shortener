@@ -1,8 +1,20 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
 from src.api.router import router as api_router
+from src.cache import cache_storage
+from src.database import engine
 from src.settings import app_settings
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    yield
+
+    await engine.dispose()
+    await cache_storage.close()
 
 
 def create_app() -> FastAPI:
@@ -14,6 +26,7 @@ def create_app() -> FastAPI:
         redoc_url='/redoc' if app_settings.environment == 'development' else None,
         openapi_url='/openapi.json' if app_settings.environment == 'development' else None,
         root_path=app_settings.root_path if app_settings.root_path else '',
+        lifespan=lifespan,
     )
     app.include_router(api_router)
 

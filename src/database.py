@@ -6,9 +6,8 @@ from src.settings import db_settings
 
 
 engine = create_async_engine(
-    f"postgresql+asyncpg://{db_settings.user}:{db_settings.password}@{db_settings.host}/{db_settings.name}",
+    f'postgresql+asyncpg://{db_settings.user}:{db_settings.password}@{db_settings.host}/{db_settings.name}',
     pool_size=10,
-    max_overflow=15,
 )
 session_factory = async_sessionmaker(
     engine,

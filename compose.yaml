@@ -27,7 +27,17 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+    restart: always
+
+  redis:
+    container_name: redis
+    image: redis:8-alpine
+    command: [ "redis-server", "--requirepass", "${REDIS_PASSWORD}" ]
+    volumes:
+      - redis-data:/data
+    restart: always
 
 volumes:
   migrations-data: {}
   postgres-data: {}
+  redis-data: {}
