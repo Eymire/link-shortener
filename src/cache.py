@@ -30,19 +30,6 @@ class CacheStorage:
     async def delete(self, key: str):
         await self.redis.delete(key)
 
-    async def start(self) -> None:
-        self.pool = ConnectionPool(
-            host=redis_settings.host,
-            port=redis_settings.port,
-            db=redis_settings.db,
-            password=redis_settings.password,
-            max_connections=redis_settings.max_connections,
-            decode_responses=True,
-            socket_keepalive=True,
-            health_check_interval=30,
-        )
-        self.redis = Redis(connection_pool=self.pool)
-
     async def close(self) -> None:
         await self.redis.close()
         await self.pool.disconnect()

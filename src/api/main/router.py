@@ -10,13 +10,16 @@ from . import services
 router = APIRouter()
 
 
-@router.get('/{short_code}')
+@router.get(
+    '/{short_code}',
+    response_class=RedirectResponse,
+)
 async def redirect_to_original_link(
     session: session_dep,
     short_code: str,
 ):
     if result := await cache_storage.get(short_code):
-        return RedirectResponse(url=result)
+        return result
 
     result = await services.get_original_link(
         session,
@@ -25,4 +28,4 @@ async def redirect_to_original_link(
 
     await cache_storage.set(short_code, result)
 
-    return RedirectResponse(url=result)
+    return result

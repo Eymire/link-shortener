@@ -32,7 +32,7 @@ async def add_short_link(
     stmt = (
         insert(LinkModel)
         .values(
-            original_url=str(data.original_url),
+            url=str(data.url),
             short_code=short_code,
             expires_at=datetime.now(UTC) + timedelta(days=app_settings.link_lifetime_days),
         )

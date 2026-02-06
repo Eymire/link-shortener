@@ -11,7 +11,7 @@ class Link(Base):
     __tablename__ = 'links'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    original_url: Mapped[str]
+    url: Mapped[str]
     short_code: Mapped[str] = mapped_column(unique=True, index=True)
 
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))

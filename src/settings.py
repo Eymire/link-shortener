@@ -44,7 +44,7 @@ class RedisSettings(BaseSettings):
     port: int
     db: int = 0
     password: str
-    max_connections: int = 5
+    max_connections: int = 10
 
 
 app_settings = AppSettings()  # type: ignore[call-arg]

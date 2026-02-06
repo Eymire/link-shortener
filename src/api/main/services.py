@@ -19,4 +19,4 @@ async def get_original_link(
             detail='Link not found',
         )
 
-    return result.original_url
+    return result.url
