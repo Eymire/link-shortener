@@ -9,4 +9,7 @@ RUN uv sync --locked
 
 COPY . .
 
-CMD [ "uv", "run", "uvicorn", "--factory", "src.main:create_app", "--host", "0.0.0.0", "--workers", "4", "--no-server-header", "--no-date-header", "--no-use-colors" ]
+USER app
+EXPOSE 8000
+
+CMD [ "uv", "run", "uvicorn", "--factory", "src.main:create_app", "--host", "0.0.0.0", "--workers", "4", "--no-server-header", "--no-date-header" ]
