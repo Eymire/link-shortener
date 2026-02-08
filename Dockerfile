@@ -1,5 +1,5 @@
 FROM python:3.13-slim-bookworm
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.10.0 /uv /uvx /bin/
 
 RUN useradd -m -u 1001 app
 
