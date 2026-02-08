@@ -12,7 +12,7 @@ class AppSettings(BaseSettings):
     )
 
     environment: Literal['development', 'production'] = 'development'
-    root_path: str | None = None
+    root_path: str = ''
     link_length: int = 8
     link_lifetime_days: int = 30
     link_cached_lifetime_minutes: int = 60
@@ -41,7 +41,7 @@ class RedisSettings(BaseSettings):
     )
 
     host: str
-    port: int
+    port: int = 6379
     db: int = 0
     password: str
     max_connections: int = 10

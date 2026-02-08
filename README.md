@@ -22,32 +22,22 @@ FastAPI service that creates short links, stores them in Postgres, and caches re
 - `DELETE /links/{short_code}` -> remove a short link
 - `GET /{short_code}` -> redirect to original URL
 
-The OpenAPI docs are available only when `APP_ENVIRONMENT=development` at `/docs` and `/openapi.json`.
+The OpenAPI docs are available only when `APP_ENVIRONMENT=development` at `/docs`, `/redoc` and `/openapi.json`.
 
 ### Configuration
 
 Create a `.env` file in the project root with these variables:
 
 ```
-# app
-APP_ENVIRONMENT=development
-APP_ROOT_PATH=
-APP_LINK_LENGTH=8
-APP_LINK_LIFETIME_DAYS=30
-APP_LINK_CACHED_LIFETIME_MINUTES=60
-
 # database
 DB_HOST=postgres
-DB_NAME=link_shortener
-DB_USER=link_user
-DB_PASSWORD=link_password
+DB_NAME=app
+DB_USER=app_user
+DB_PASSWORD=postgres_password
 
 # redis
 REDIS_HOST=redis
-REDIS_PORT=6379
-REDIS_DB=0
 REDIS_PASSWORD=redis_password
-REDIS_MAX_CONNECTIONS=10
 
 # compose
 COMPOSE_APP_PORT=8000
@@ -71,7 +61,7 @@ Migrations run automatically on container start via [entrypoint.sh](entrypoint.s
 1. Install dependencies (requires Python 3.13 and `uv`):
 
 	```bash
-	uv sync
+	uv sync --locked
 	```
 
 2. Apply migrations:
@@ -83,7 +73,7 @@ Migrations run automatically on container start via [entrypoint.sh](entrypoint.s
 3. Start the server:
 
 	```bash
-	uv run uvicorn --factory src.main:create_app --port 8000
+	uv run uvicorn --factory src.main:create_app --port 8000 --reload
 	```
 
 ### Notes
