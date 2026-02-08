@@ -16,4 +16,8 @@ RUN chown -R app:app /app
 USER app
 EXPOSE 8000
 
-CMD [ "uv", "run", "uvicorn", "--factory", "src.main:create_app", "--host", "0.0.0.0", "--workers", "4", "--no-server-header", "--no-date-header" ]
+RUN chmod +x ./entrypoint.sh
+
+ENTRYPOINT [ "./entrypoint.sh" ]
+
+CMD [ "uv", "run", "uvicorn", "--factory", "src.main:create_app", "--host", "0.0.0.0", "--workers", "2", "--no-server-header", "--no-date-header", "--no-use-colors" ]

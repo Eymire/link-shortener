@@ -4,11 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "uv", "run", "uvicorn", "--factory", "src.main:create_app", "--host", "0.0.0.0", "--workers", "${API_WORKERS_COUNT}", "--no-server-header", "--no-date-header", "--no-use-colors", "--no-access-log" ]
-    volumes:
-      - migrations-data:/app/migrations/versions
+    command: [ "uv", "run", "uvicorn", "--factory", "src.main:create_app", "--host", "0.0.0.0", "--workers", "${COMPOSE_APP_WORKERS_COUNT}", "--no-server-header", "--no-date-header", "--no-use-colors" ]
+    ports:
+      - "${COMPOSE_APP_PORT}:8000"
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     env_file:
       - .env
@@ -24,8 +26,8 @@ services:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-U", "${DB_USER}", "-d", "${DB_NAME}" ]
-      interval: 5s
-      timeout: 3s
+      interval: 3s
+      timeout: 2s
       retries: 5
     restart: always
 
@@ -35,9 +37,13 @@ services:
     command: [ "redis-server", "--requirepass", "${REDIS_PASSWORD}" ]
     volumes:
       - redis-data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping" ]
+      interval: 3s
+      timeout: 2s
+      retries: 5
     restart: always
 
 volumes:
-  migrations-data: {}
   postgres-data: {}
   redis-data: {}

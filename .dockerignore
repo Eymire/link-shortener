@@ -10,6 +10,4 @@ compose.yaml
 
 .env
 
-migrations/versions/*
-
 README.md
