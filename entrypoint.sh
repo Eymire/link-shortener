@@ -1,7 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
+set -e
 
 echo "Start migrations..."
-uv run alembic upgrade head
+alembic upgrade head
 echo "Migrations complete!"
 
 exec "$@"
