@@ -13,13 +13,43 @@ dependencies = [
     "uvicorn[standard]>=0.40.0",
 ]
 
+[dependency-groups]
+dev = [
+    "ruff>=0.15.6",
+]
+
 [tool.ruff]
 line-length = 100
-lint.select = ["ANN", "B", "A", "ICN", "LOG", "PIE", "SIM", "ARG", "I", "N", "E", "W", "F", "UP", "C4"]
-lint.ignore = ["B008", "ANN201"]
+indent-width = 4
+target-version = "py314"
+
+[tool.ruff.lint]
+select = [
+    'ANN',
+    'B',
+    'COM',
+    'C4',
+    'DTZ',
+    'SIM',
+    'ARG',
+    'PTH',
+    'I',
+    'C90',
+    'N',
+    'E',
+    'W',
+    'F',
+    'UP',
+    'PL',
+    'FURB',
+    'RUF',
+]
+ignore = ['ANN201', 'COM812']
 
 [tool.ruff.lint.isort]
 lines-after-imports = 2
 
 [tool.ruff.format]
 quote-style = "single"
+indent-style = "space"
+line-ending = "lf"
