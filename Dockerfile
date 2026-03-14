@@ -7,7 +7,7 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 
 RUN uv venv .venv --prompt .venv
-RUN uv sync --locked --compile-bytecode
+RUN uv sync --locked --no-dev --compile-bytecode
 
 
 # ===== Runtime stage =====
@@ -27,4 +27,4 @@ ENTRYPOINT [ "./entrypoint.sh" ]
 
 EXPOSE 8000
 
-CMD [ "uvicorn", "--factory", "src.main:create_app", "--host", "0.0.0.0", "--no-server-header", "--no-use-colors" ]
+CMD [ "uvicorn", "--factory", "src.main:create_app", "--host", "0.0.0.0", "--workers", "2", "--no-server-header", "--no-use-colors" ]
